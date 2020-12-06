@@ -1,0 +1,53 @@
+<select [(ngModel)]="sourceSelect" (change)="sourceDropdownClick()">
+  <option *ngFor="let option of sourceDropdownContent; let index = index">
+    {{option}}
+  </option>
+</select>
+
+<select [(ngModel)]="secondSelect" (change)="secondDropdownClick()">
+  <option *ngFor="let option of secondDropdownContent; let index = index">
+    {{option}}
+  </option>
+</select>
+
+
+<select [(ngModel)]="dateSelect" (change)="dateSelectChanged()">
+  <option value="0" [selected]="true">Today</option>
+  <option value="2">3 days</option>
+  <option value="6">1 week</option>
+</select>
+
+<table>
+  <thead>
+    <tr>
+      <ng-container *ngFor="let col of theadTdList">
+        <td
+          (click)="theadClick($event)"
+          [class.desc]="col.sort === 'desc'"
+          [class.asc]="col.sort === 'asc'"
+        >
+          {{col.colname}}
+        </td>
+      </ng-container>
+    </tr>
+  </thead>
+  <tbody>
+
+    <ng-container *ngFor="let row of rows">
+      <tr (click)="rowClick(row.id)">
+        <td>{{row.name}}</td>
+        <td>{{row.leads}}</td>
+        <td>${{row.revenue}}</td>
+        <td>${{row.rpl}}</td>
+      </tr>
+      <ng-container *ngIf="row.isExpanded">
+        <tr *ngFor="let detail of row.details" class="details-row">
+          <td>{{ detail.date | date }}</td>
+          <td>{{detail.leads}}</td>
+          <td>{{detail.revenue}}</td>
+          <td>{{detail.rpl}}</td>
+        </tr>
+      </ng-container>
+    </ng-container>
+  </tbody>
+</table>
